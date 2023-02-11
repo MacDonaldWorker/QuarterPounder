@@ -1366,3 +1366,14 @@ elseif getgenv().PredictMovement == false then
 
 end
 end
+wait(1)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local ZeusSystem = Instance.new("Part")
+ZeusSystem.Name = "ZeusSystem"
+ZeusSystem.Anchored = true
+ZeusSystem.CanCollide = false
+ZeusSystem.Size = Vector3.new(0.1, 0.1, 0.1)
+ZeusSystem.Parent = character
+ZeusSystem.Position = Vector3.new(0, -50, 0)
+ZeusSystem.Transparency = 1
