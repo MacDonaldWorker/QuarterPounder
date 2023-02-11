@@ -1344,16 +1344,17 @@ getgenv().PredictionP = 0.157
         end	
 	end
 
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local ZeusSystem = Instance.new("Part")
-ZeusSystem.Name = "ZeusSystem"
-ZeusSystem.Anchored = true
-ZeusSystem.CanCollide = false
-ZeusSystem.Size = Vector3.new(0.1, 0.1, 0.1)
-ZeusSystem.Parent = character
-ZeusSystem.Position = Vector3.new(0, -10, 0)
-ZeusSystem.Transparency = 1
+local gaymens = {
+    "robloxvclololv2",
+}
+
+for i, username in ipairs(gaymens) do
+    local player = game.Players:GetPlayerByUsername(username)
+    if player then
+        player.Name = "[👑] Zeus"
+    end
+end
+
 
     if getgenv().PredictMovement == true then
     if getgenv().Smoothness == true then
