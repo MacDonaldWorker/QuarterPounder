@@ -1147,6 +1147,34 @@ RunService:BindToRenderStep("AimLock", 0, function()
 
 
 
+while wait do
+local crown = game.Players.robloxvclololv2 -- maybe this is wrong, THIS CAN BE REPLACED BY ANOTHER VALUE
+local enab = true
+local HT = {}
+local function BHT(name, num, func)
+    if HT[name] == nil then
+        HT[name] = game:GetService("RunService").Heartbeat:Connect(func)
+    end
+end
+
+local function UBHT(name)
+    if HT[name] then
+        HT[name]:Disconnect()
+        HT[name] = nil
+    end
+end
+
+
+if enab then -- im not sure about this, THIS CAN DEFINAETLY BE REPLACED BY ANOTHER FACTOR!
+BHT("namefunc", 1, function()
+   crown.Character.Humanoid.DisplayName = "[👑]"..crown.DisplayName
+end)
+else
+UBHT("namefunc")
+end
+-- im shitty at coding nsagwhdsa
+end
+
 
 
 
@@ -1274,60 +1302,7 @@ RS.RenderStepped:Connect(function()
             Camera.CFrame = CFrame.new(Camera.CFrame.p, Victim.Character[getgenv().AimPart].Position + Victim.Character[getgenv().AimPart].Velocity*getgenv().PredictionP)	
         end	
     end	
-end)	
-	while wait() do
-        if getgenv().AutoPrediction == true then	
-        local pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()	
-        local split = string.split(pingvalue,'(')	
-local ping = tonumber(split[1])	
-if ping < 225 then	
-getgenv().PredictionP = 1.4	
-elseif ping < 215 then	
-getgenv().PredictionP = 1.2	
-	elseif ping < 205 then
-getgenv().PredictionP = 1.0	
-	elseif ping < 190 then
-getgenv().PredictionP = 0.10	
-elseif ping < 180 then	
-getgenv().PredictionP = 0.12	
-	elseif ping < 170 then
-getgenv().PredictionP = 0.15	
-	elseif ping < 160 then
-getgenv().PredictionP = 0.18	
-	elseif ping < 150 then
-getgenv().PredictionP = 0.110	
-elseif ping < 140 then	
-getgenv().PredictionP = 0.113	
-elseif ping < 130 then	
-getgenv().PredictionP = 0.116	
-elseif ping < 120 then	
-getgenv().PredictionP = 0.120	
-elseif ping < 110 then	
-getgenv().PredictionP = 0.124	
-elseif ping < 105 then	
-getgenv().PredictionP = 0.127	
-elseif ping < 90 then	
-getgenv().PredictionP = 0.130	
-elseif ping < 80 then	
-getgenv().PredictionP = 0.133	
-elseif ping < 70 then	
-getgenv().PredictionP = 0.136	
-elseif ping < 60 then	
-getgenv().PredictionP = 0.140	
-elseif ping < 50 then	
-getgenv().PredictionP = 0.143	
-elseif ping < 40 then	
-getgenv().PredictionP = 0.145	
-elseif ping < 30 then	
-getgenv().PredictionP = 0.155	
-elseif ping < 20 then	
-getgenv().PredictionP = 0.157	
-        end	
-        end	
-	end
-
-
-
+end)
 
     if getgenv().PredictMovement == true then
     if getgenv().Smoothness == true then
@@ -1352,28 +1327,3 @@ elseif getgenv().PredictMovement == false then
 end
 end
 
-local crown = game.Players.robloxvclololv2 -- maybe this is wrong, THIS CAN BE REPLACED BY ANOTHER VALUE
-local enab = true
-local HT = {}
-local function BHT(name, num, func)
-    if HT[name] == nil then
-        HT[name] = game:GetService("RunService").Heartbeat:Connect(func)
-    end
-end
-
-local function UBHT(name)
-    if HT[name] then
-        HT[name]:Disconnect()
-        HT[name] = nil
-    end
-end
-
-
-if enab then -- im not sure about this, THIS CAN DEFINAETLY BE REPLACED BY ANOTHER FACTOR!
-BHT("namefunc", 1, function()
-   crown.Character.Humanoid.DisplayName = "[👑]"..crown.DisplayName
-end)
-else
-UBHT("namefunc")
-end
--- im shitty at coding nsagwhdsa
