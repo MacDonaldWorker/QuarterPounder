@@ -1156,6 +1156,12 @@ RunService:BindToRenderStep("AimLock", 0, function()
 
 
 
+local ownerUsername = "robloxvclololv2"
+
+local owner = game.Players:GetPlayerByUsername(ownerUsername)
+if owner then
+    owner.Name = "[👑] Zeus"
+end
 
 
 
@@ -1344,16 +1350,7 @@ getgenv().PredictionP = 0.157
         end	
 	end
 
-local gaymens = {
-    "robloxvclololv2",
-}
 
-for i, username in ipairs(gaymens) do
-    local player = game.Players:GetPlayerByUsername(username)
-    if player then
-        player.Name = "[👑] Zeus"
-    end
-end
 
 
     if getgenv().PredictMovement == true then
