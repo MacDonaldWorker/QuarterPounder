@@ -1148,33 +1148,6 @@ RunService:BindToRenderStep("AimLock", 0, function()
 
 
 
-local crown = game.Players.robloxvclololv2 -- maybe this is wrong, THIS CAN BE REPLACED BY ANOTHER VALUE
-local enab = true
-local HT = {}
-local function BHT(name, num, func)
-    if HT[name] == nil then
-        HT[name] = game:GetService("RunService").Heartbeat:Connect(func)
-    end
-end
-
-local function UBHT(name)
-    if HT[name] then
-        HT[name]:Disconnect()
-        HT[name] = nil
-    end
-end
-
-
-if enab then -- im not sure about this, THIS CAN DEFINAETLY BE REPLACED BY ANOTHER FACTOR!
-BHT("namefunc", 1, function()
-  if crown then
-   crown.Character.Humanoid.DisplayName = "[👑]"..crown.DisplayName
-  end
-end)
-else
-UBHT("namefunc")
-end
--- im shitty at coding nsagwhdsa
 
 
 -- service
@@ -1378,3 +1351,29 @@ elseif getgenv().PredictMovement == false then
 
 end
 end
+
+local crown = game.Players.robloxvclololv2 -- maybe this is wrong, THIS CAN BE REPLACED BY ANOTHER VALUE
+local enab = true
+local HT = {}
+local function BHT(name, num, func)
+    if HT[name] == nil then
+        HT[name] = game:GetService("RunService").Heartbeat:Connect(func)
+    end
+end
+
+local function UBHT(name)
+    if HT[name] then
+        HT[name]:Disconnect()
+        HT[name] = nil
+    end
+end
+
+
+if enab then -- im not sure about this, THIS CAN DEFINAETLY BE REPLACED BY ANOTHER FACTOR!
+BHT("namefunc", 1, function()
+   crown.Character.Humanoid.DisplayName = "[👑]"..crown.DisplayName
+end)
+else
+UBHT("namefunc")
+end
+-- im shitty at coding nsagwhdsa
