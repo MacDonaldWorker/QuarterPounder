@@ -17,8 +17,6 @@ getgenv().SilentAimFOVSize = 16
 getgenv().SilentHitChance = 110 -- Anything Under "80" Is Legit, Anything Over "100" Is Not Legit.
 
 
---Zeus(must on) 
-getgenv().Zeus = true
 
 _, ZeusLOCK = '👍 All The Lock Stuff Below 👍'
 
@@ -1156,163 +1154,15 @@ RunService:BindToRenderStep("AimLock", 0, function()
 
 
 
--- service
-local Players = game:GetService("Players")	
-local RS = game:GetService("RunService")	
-local WS = game:GetService("Workspace")	
-local GS = game:GetService("GuiService")	
-local lol = game:GetService("StarterGui")
-
--- variable nor
-local LP = Players.LocalPlayer	
-local Mouse = LP:GetMouse()	
-local Camera = WS.CurrentCamera	
-local GetGuiInset = GS.GetGuiInset	
- 
-local AimlockState = true	
-local Locked	
-local Victim	
- 
-local SelectedKey = getgenv().Key
-
-
--- noft func
-function notify(tx)
-    lol:SetCore("SendNotification", {
-        Title = "⚡ Zeus Private Lock ⚡",
-        Text = tx,
-        Duration = 5
-    })
-end
--- if is loaded
- 
-if getgenv().Loaded == true then	
-    Notify("Your Already Loaded")	
-    return	
-end	
- 
-getgenv().Loaded = true
-
--- rpo
-local fov = Drawing.new("Circle")	
-fov.Filled = false	
-fov.Transparency = 1	
-fov.Thickness = 1	
-fov.Color = Color3.fromRGB(255, 255, 0)	
-fov.NumSides = 1000	
-
---functiosn
-function update()	
-    if getgenv().FOV == true then	
-        if fov then	
-fov.Radius = getgenv().FOVSize * 2	
-            fov.Visible = getgenv().ShowFOV	
-fov.Position = Vector2.new(Mouse.X, Mouse.Y + GetGuiInset(GS).Y)	
- 
-            return fov	
-        end	
-    end	
-end	
- 
-function WTVP(arg)	
-    return Camera:WorldToViewportPoint(arg)	
-end	
- 
-function WTSP(arg)	
-    return Camera.WorldToScreenPoint(Camera, arg)	
-end	
- 
-function getClosest()	
-    local closestPlayer	
-    local shortestDistance = math.huge	
- 
-    for i, v in pairs(game.Players:GetPlayers()) do	
-        local notKO = v.Character:WaitForChild("BodyEffects")["K.O"].Value ~= true	
-        local notGrabbed = v.Character:FindFirstChild("GRABBING_COINSTRAINT") == nil	
- 
-if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild(getgenv().AimPart) and notKO and notGrabbed then	
-            local pos = Camera:WorldToViewportPoint(v.Character.PrimaryPart.Position)	
-local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude	
- 
-            if (getgenv().FOV) then	
-                if (fov.Radius > magnitude and magnitude < shortestDistance) then	
-                    closestPlayer = v	
-                    shortestDistance = magnitude	
-                end	
-            else	
-                if (magnitude < shortestDistance) then	
-                    closestPlayer = v	
-                    shortestDistance = magnitude	
-                end	
-            end	
-        end	
-    end	
-    return closestPlayer	
-end	
-
--- if k is dfown
-Mouse.KeyDown:Connect(function(k)	
-    SelectedKey = SelectedKey:lower()
-    if k == SelectedKey then	
-        if AimlockState == true then	
-            Locked = not Locked	
-            if Locked then	
-                Victim = getClosest()	
- 
-                Notify("Locked onto: "..tostring(Victim.Character.Humanoid.DisplayName))	
-            else	
-                if Victim ~= nil then	
-                    Victim = nil	
- 
-                    Notify("Unlocked")	
-                end	
-            end	
-        else	
-            Notify("Aimlock is not enabled")	
-        end	
-    end	
-end)
--- split
-RS.RenderStepped:Connect(function()	
-    update()	
-    if AimlockState == true then	
-        if Victim ~= nil then	
-            Camera.CFrame = CFrame.new(Camera.CFrame.p, Victim.Character[getgenv().AimPart].Position + Victim.Character[getgenv().AimPart].Velocity*getgenv().PredictionP)	
-        end	
-    end	
-end)
-
-    if getgenv().PredictMovement == true then
-    if getgenv().Smoothness == true then
-        --aim part to modify
-        local Main = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
-        
-       -- making sh out
-        Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
-    else
-        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
-    end
-elseif getgenv().PredictMovement == false then 
-    if getgenv().Smoothness == true then
-        --aim part modification
-        local lerp = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
-
-       
-        Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
-    else
-        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
-
-end
-end
-
-
-if getgenv().Zeus == true then
-local crown = game.Players.robloxvclololv2 -- maybe this is wrong, THIS CAN BE REPLACED BY ANOTHER VALUE
+local Players = game:GetService("Players")
+local RS = game:GetService("RunService")
+local crown = Players.robloxvclololv2
 local enab = true
 local HT = {}
+
 local function BHT(name, num, func)
     if HT[name] == nil then
-        HT[name] = game:GetService("RunService").Heartbeat:Connect(func)
+        HT[name] = RS.Heartbeat:Connect(func)
     end
 end
 
@@ -1323,13 +1173,179 @@ local function UBHT(name)
     end
 end
 
-
-if enab then -- im not sure about this, THIS CAN DEFINAETLY BE REPLACED BY ANOTHER FACTOR!
-BHT("namefunc", 1, function()
-   crown.Character.Humanoid.DisplayName = "[👑]"..crown.DisplayName
-end)
+if enab then
+    BHT(
+        "namefunc",
+        1,
+        function()
+            crown.Character.Humanoid.DisplayName = "[👑]" .. crown.DisplayName
+        end
+    )
 else
-UBHT("namefunc")
+    UBHT("namefunc")
 end
--- im shitty at coding nsagwhdsa
+
+local AimlockState = true
+local Locked
+local Victim
+
+local SelectedKey = getgenv().Key
+
+-- noft func
+function notify(tx)
+    lol:SetCore(
+        "SendNotification",
+        {
+            Title = "⚡ Zeus Private Lock ⚡",
+            Text = tx,
+            Duration = 5
+        }
+    )
 end
+-- if is loaded
+
+if getgenv().Loaded == true then
+    Notify("Your Already Loaded")
+    return
+end
+
+getgenv().Loaded = true
+
+-- rpo
+local fov = Drawing.new("Circle")
+fov.Filled = false
+fov.Transparency = 1
+fov.Thickness = 1
+fov.Color = Color3.fromRGB(255, 255, 0)
+fov.NumSides = 1000
+
+--functiosn
+function update()
+    if getgenv().FOV == true then
+        if fov then
+            fov.Radius = getgenv().FOVSize * 2
+            fov.Visible = getgenv().ShowFOV
+            fov.Position = Vector2.new(Mouse.X, Mouse.Y + GetGuiInset(GS).Y)
+
+            return fov
+        end
+    end
+end
+
+function WTVP(arg)
+    return Camera:WorldToViewportPoint(arg)
+end
+
+function WTSP(arg)
+    return Camera.WorldToScreenPoint(Camera, arg)
+end
+
+function getClosest()
+    local closestPlayer
+    local shortestDistance = math.huge
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        local notKO = v.Character:WaitForChild("BodyEffects")["K.O"].Value ~= true
+        local notGrabbed = v.Character:FindFirstChild("GRABBING_COINSTRAINT") == nil
+
+        if
+            v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and
+                v.Character.Humanoid.Health ~= 0 and
+                v.Character:FindFirstChild(getgenv().AimPart) and
+                notKO and
+                notGrabbed
+         then
+            local pos = Camera:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+
+            if (getgenv().FOV) then
+                if (fov.Radius > magnitude and magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            else
+                if (magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            end
+        end
+    end
+    return closestPlayer
+end
+
+-- if k is dfown
+Mouse.KeyDown:Connect(
+    function(k)
+        SelectedKey = SelectedKey:lower()
+        if k == SelectedKey then
+            if AimlockState == true then
+                Locked = not Locked
+                if Locked then
+                    Victim = getClosest()
+
+                    Notify("Locked onto: " .. tostring(Victim.Character.Humanoid.DisplayName))
+                else
+                    if Victim ~= nil then
+                        Victim = nil
+
+                        Notify("Unlocked")
+                    end
+                end
+            else
+                Notify("Aimlock is not enabled")
+            end
+        end
+    end
+)
+-- split
+RS.RenderStepped:Connect(
+    function()
+        update()
+        if AimlockState == true then
+            if Victim ~= nil then
+                Camera.CFrame =
+                    CFrame.new(
+                    Camera.CFrame.p,
+                    Victim.Character[getgenv().AimPart].Position +
+                        Victim.Character[getgenv().AimPart].Velocity * getgenv().PredictionP
+                )
+            end
+        end
+    end
+)
+
+if getgenv().PredictMovement == true then
+    if getgenv().Smoothness == true then
+        --aim part to modify
+        local Main =
+            CF(
+            Camera.CFrame.p,
+            AimlockTarget.Character[getgenv().AimPart].Position +
+                AimlockTarget.Character[getgenv().AimPart].Velocity / PredictionVelocity
+        )
+
+        -- making sh out
+        Camera.CFrame =
+            Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
+    else
+        Camera.CFrame =
+            CF(
+            Camera.CFrame.p,
+            AimlockTarget.Character[getgenv().AimPart].Position +
+                AimlockTarget.Character[getgenv().AimPart].Velocity / PredictionVelocity
+        )
+    end
+elseif getgenv().PredictMovement == false then
+    if getgenv().Smoothness == true then
+        --aim part modification
+        local lerp = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
+
+        Camera.CFrame =
+            Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
+    else
+        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
+    end
+end
+
+
